@@ -10,7 +10,7 @@ async function bootstrap() {
 
     const config = new DocumentBuilder()
         .setTitle('Spells and Gears')
-        .setDescription('The Spells and Gears API description')
+        .setDescription('The Spells and Gears API documentation')
         .setVersion('0.0.1')
         .build();
 

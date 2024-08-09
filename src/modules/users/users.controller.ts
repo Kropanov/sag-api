@@ -1,16 +1,23 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { plainToInstance } from 'class-transformer';
 
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserRequestDTO } from './dto/create-user-request.dto';
+import { CreateUserResponseDTO } from './dto/create-user-response.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
+@ApiTags('Users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
     @Post()
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.usersService.create(createUserDto);
+    @ApiOkResponse({ type: CreateUserResponseDTO })
+    create(@Body() body: CreateUserRequestDTO) {
+        const data = this.usersService.create(body);
+
+        return plainToInstance(CreateUserResponseDTO, data);
     }
 
     @Get()

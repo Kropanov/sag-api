@@ -1,17 +1,22 @@
+import { PrismaService } from '@app/libs/prisma';
 import { Injectable } from '@nestjs/common';
 
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserRequestDTO } from './dto/create-user-request.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    create(_createUserDto: CreateUserDto) {
-        return 'This action adds a new user';
+    private readonly prismaService: PrismaService;
+    constructor() {
+        this.prismaService = new PrismaService();
+    }
+
+    create(data: CreateUserRequestDTO) {
+        return this.prismaService.user.create({ data });
     }
 
     findAll() {
-        return `This action returns all users`;
+        return this.prismaService.user.findMany();
     }
 
     findOne(id: number) {
