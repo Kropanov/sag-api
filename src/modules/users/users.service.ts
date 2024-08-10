@@ -7,6 +7,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UsersService {
     private readonly prismaService: PrismaService;
+
     constructor() {
         this.prismaService = new PrismaService();
     }
@@ -28,7 +29,16 @@ export class UsersService {
         return `This action updates a #${id} user`;
     }
 
-    remove(id: number) {
-        return `This action removes a #${id} user`;
+    remove(id: string) {
+        return this.prismaService.user.delete({
+            where: { id },
+            select: {
+                email: true,
+            },
+        });
+    }
+
+    removeAll() {
+        return this.prismaService.user.deleteMany();
     }
 }

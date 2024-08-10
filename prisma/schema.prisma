@@ -18,7 +18,7 @@ model User {
 
 model Hero {
   id        String   @id @default(uuid(7))
-  user      User?    @relation(fields: [userId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

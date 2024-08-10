@@ -4,6 +4,8 @@ import { plainToInstance } from 'class-transformer';
 
 import { CreateUserRequestDTO } from './dto/create-user-request.dto';
 import { CreateUserResponseDTO } from './dto/create-user-response.dto';
+import { DeleteUserResponseDTO } from './dto/delete-user-response.dto';
+import { DeleteUsersResponseDTO } from './dto/delete-users-response.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
 
@@ -36,7 +38,14 @@ export class UsersController {
     }
 
     @Delete(':id')
+    @ApiOkResponse({ type: DeleteUserResponseDTO })
     remove(@Param('id') id: string) {
-        return this.usersService.remove(+id);
+        return this.usersService.remove(id);
+    }
+
+    @Delete()
+    @ApiOkResponse({ type: DeleteUsersResponseDTO })
+    removeAll() {
+        return this.usersService.removeAll();
     }
 }
