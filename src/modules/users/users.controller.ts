@@ -6,7 +6,9 @@ import { CreateUserRequestDTO } from './dto/create-user-request.dto';
 import { CreateUserResponseDTO } from './dto/create-user-response.dto';
 import { DeleteUserResponseDTO } from './dto/delete-user-response.dto';
 import { DeleteUsersResponseDTO } from './dto/delete-users-response.dto';
+import { GetUsersResponseDTO } from './dto/get-users-response.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDTO } from './dto/user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -23,13 +25,19 @@ export class UsersController {
     }
 
     @Get()
-    findAll() {
-        return this.usersService.findAll();
+    @ApiOkResponse({ type: GetUsersResponseDTO })
+    async findAll() {
+        const data = await this.usersService.findAll();
+
+        return plainToInstance(GetUsersResponseDTO, { data });
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.usersService.findOne(+id);
+    @ApiOkResponse({ type: UserDTO })
+    async findOne(@Param('id') id: string) {
+        const data = await this.usersService.findOne(id);
+
+        return plainToInstance(UserDTO, data);
     }
 
     @Patch(':id')
@@ -45,7 +53,9 @@ export class UsersController {
 
     @Delete()
     @ApiOkResponse({ type: DeleteUsersResponseDTO })
-    removeAll() {
-        return this.usersService.removeAll();
+    async removeAll() {
+        const data = await this.usersService.removeAll();
+
+        return plainToInstance(DeleteUsersResponseDTO, data);
     }
 }

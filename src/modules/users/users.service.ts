@@ -20,8 +20,10 @@ export class UsersService {
         return this.prismaService.user.findMany();
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} user`;
+    findOne(id: string) {
+        return this.prismaService.user.findUnique({
+            where: { id },
+        });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
