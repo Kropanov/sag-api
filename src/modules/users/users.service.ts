@@ -2,7 +2,7 @@ import { PrismaService } from '@app/libs/prisma';
 import { Injectable } from '@nestjs/common';
 
 import { CreateUserRequestDTO } from './dto/create-user-request.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -26,9 +26,11 @@ export class UsersService {
         });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    update(id: number, _updateUserDto: UpdateUserDto) {
-        return `This action updates a #${id} user`;
+    update(id: string, data: UpdateUserDTO) {
+        return this.prismaService.user.update({
+            where: { id },
+            data,
+        });
     }
 
     remove(id: string) {

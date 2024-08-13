@@ -7,7 +7,7 @@ import { CreateUserResponseDTO } from './dto/create-user-response.dto';
 import { DeleteUserResponseDTO } from './dto/delete-user-response.dto';
 import { DeleteUsersResponseDTO } from './dto/delete-users-response.dto';
 import { GetUsersResponseDTO } from './dto/get-users-response.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserDTO } from './dto/user.dto';
 import { UsersService } from './users.service';
 
@@ -41,14 +41,18 @@ export class UsersController {
     }
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-        return this.usersService.update(+id, updateUserDto);
+    async update(@Param('id') id: string, @Body() body: UpdateUserDTO) {
+        const data = await this.usersService.update(id, body);
+
+        return plainToInstance(UpdateUserDTO, data);
     }
 
     @Delete(':id')
     @ApiOkResponse({ type: DeleteUserResponseDTO })
     remove(@Param('id') id: string) {
-        return this.usersService.remove(id);
+        const data = this.usersService.remove(id);
+
+        return plainToInstance(DeleteUserResponseDTO, data);
     }
 
     @Delete()
