@@ -8,18 +8,29 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid(7))
-  email      String   @unique
+  id         String    @id @default(uuid(7))
+  name       String?
+  email      String    @unique
   password   String
-  characters Hero[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  characters World[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Session    Session[]
 }
 
-model Hero {
-  id        String   @id @default(uuid(7))
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+model World {
+  id        String    @id @default(uuid(7))
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  sessions  Session[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Session {
+  id      String  @id @default(uuid(7))
+  user    User    @relation(fields: [userId], references: [id])
+  World   World?  @relation(fields: [worldId], references: [id], onDelete: Cascade)
+  worldId String?
+  userId  String
 }

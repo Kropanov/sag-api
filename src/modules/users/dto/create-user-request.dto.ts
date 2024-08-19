@@ -10,6 +10,11 @@ export class CreateUserRequestDTO {
     email: string;
 
     @Expose()
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    name?: string;
+
+    @Expose()
     @IsNotEmpty()
     @ApiProperty({ type: String })
     password: string;
