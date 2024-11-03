@@ -13,16 +13,18 @@ model User {
   email      String    @unique
   password   String
 
+  worlds     World[]
+  players    Player[]
+
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 
-  worlds     World[]
-  players    Player[]
+  @@map("users")
 }
 
 model World {
   id         String       @id @default(uuid(7))
-  level      Int          @default(0)
+  level      Int          @default(1)
   status     WorldStatus  @default(ACTIVE)
 
   user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -34,6 +36,8 @@ model World {
 
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
+
+  @@map("worlds")
 }
 
 model Player {
@@ -48,12 +52,14 @@ model Player {
 
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+
+  @@map("players")
 }
 
 model Item {
-  id           String    @id @default(uuid(7))
-  mappingId    String    @unique
-  quantity     Int       @default(0)
+  id           String     @id @default(uuid(7))
+  mappingId    String     @unique
+  quantity     Int        @default(0)
   position     Int
 
   player       Player?    @relation(fields: [playerId], references: [id], onDelete: Cascade)
@@ -61,8 +67,12 @@ model Item {
   spaceship    Spaceship? @relation(fields: [spaceshipId], references: [id], onDelete: Cascade)
   spaceshipId  String?
 
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  properties   ItemProperty[]
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("items")
 }
 
 model Planet {
@@ -75,6 +85,8 @@ model Planet {
 
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+
+  @@map("planets")
 }
 
 model Spaceship {
@@ -88,12 +100,45 @@ model Spaceship {
 
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
+
+  @@map("spaceships")
+}
+
+model ItemProperty {
+  id          String     @id @default(uuid(7))
+  name        String
+  value       Int
+  description String
+
+  effectType  EffectType @default(BUFF)
+  valueType   ValueType  @default(ABSOLUTE)
+
+  item        Item       @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId      String
+
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("item_properties")
 }
 
 enum WorldStatus {
   ACTIVE
   INACTIVE
+
+  @@map("world_status_enum")
 }
 
-// TODO: properties or ItemProperty?
-// TODO: add model mappaing (@map)
+enum EffectType {
+  BUFF
+  DEBUFF
+
+  @@map("effect_type_enum")
+}
+
+enum ValueType {
+  PERCENTAGE
+  ABSOLUTE
+
+  @@map("value_type_enum")
+}
