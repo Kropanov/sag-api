@@ -12,25 +12,88 @@ model User {
   name       String?
   email      String    @unique
   password   String
-  characters World[]
+
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  Session    Session[]
+
+  worlds     World[]
+  players    Player[]
 }
 
 model World {
-  id        String    @id @default(uuid(7))
-  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?
-  sessions  Session[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id         String       @id @default(uuid(7))
+  level      Int          @default(0)
+  status     WorldStatus  @default(ACTIVE)
+
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+
+  players    Player[]
+  planets    Planet[]
+  spaceship  Spaceship?
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
-model Session {
-  id      String  @id @default(uuid(7))
-  user    User    @relation(fields: [userId], references: [id])
-  World   World?  @relation(fields: [worldId], references: [id], onDelete: Cascade)
-  worldId String?
-  userId  String
+model Player {
+  id         String    @id @default(uuid(7))
+
+  world      World     @relation(fields: [worldId], references: [id], onDelete: Cascade)
+  worldId    String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+
+  items      Item[]
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
+
+model Item {
+  id           String    @id @default(uuid(7))
+  mappingId    String    @unique
+  quantity     Int       @default(0)
+  position     Int
+
+  player       Player?    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId     String?
+  spaceship    Spaceship? @relation(fields: [spaceshipId], references: [id], onDelete: Cascade)
+  spaceshipId  String?
+
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Planet {
+  id         String    @id @default(uuid(7))
+  type       String    @default("default")
+  position   Int
+
+  world      World     @relation(fields: [worldId], references: [id], onDelete: Cascade)
+  worldId    String
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Spaceship {
+  id         String    @id @default(uuid(7))
+  type       String
+
+  items      Item[]
+
+  world      World     @relation(fields: [worldId], references: [id], onDelete: Cascade)
+  worldId    String    @unique
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+enum WorldStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// TODO: properties or ItemProperty?
+// TODO: add model mappaing (@map)
