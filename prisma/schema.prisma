@@ -109,6 +109,7 @@ model ItemProperty {
   name        String
   value       Int
   description String
+  rarity      Rarity     @default(COMMON)
 
   effectType  EffectType @default(BUFF)
   valueType   ValueType  @default(ABSOLUTE)
@@ -141,4 +142,13 @@ enum ValueType {
   ABSOLUTE
 
   @@map("value_type_enum")
+}
+
+enum Rarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+  UNIQUE
 }
