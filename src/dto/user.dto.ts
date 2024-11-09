@@ -3,7 +3,7 @@ import { Exclude, Expose } from 'class-transformer';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
 @Exclude()
-export class CreateUserRequestDTO {
+export class UserDTO {
     @Expose()
     @IsOptional()
     @ApiPropertyOptional({ type: String })

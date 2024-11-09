@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 import { IsDefined, IsOptional } from 'class-validator';
 
+// FIXME: there are 2 user dto files
 @Exclude()
 export class UserDTO {
     @Expose()

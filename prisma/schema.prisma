@@ -59,7 +59,7 @@ model Player {
 
 model Item {
   id           String     @id @default(uuid(7))
-  mappingId    String     @unique
+  mappingId    String
   quantity     Int        @default(0)
   position     Int
 
