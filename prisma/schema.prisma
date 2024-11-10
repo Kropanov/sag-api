@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["typedSql"]
 }
 
 datasource db {
@@ -8,18 +9,147 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid(7))
-  email      String   @unique
+  id         String    @id @default(uuid(7))
+  name       String?
+  email      String    @unique
   password   String
-  characters Hero[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+
+  worlds     World[]
+  players    Player[]
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("users")
 }
 
-model Hero {
-  id        String   @id @default(uuid(7))
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model World {
+  id         String       @id @default(uuid(7))
+  level      Int          @default(1)
+  status     WorldStatus  @default(ACTIVE)
+
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+
+  players    Player[]
+  planets    Planet[]
+  spaceship  Spaceship?
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@map("worlds")
+}
+
+model Player {
+  id         String    @id @default(uuid(7))
+
+  world      World     @relation(fields: [worldId], references: [id], onDelete: Cascade)
+  worldId    String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+
+  items      Item[]
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("players")
+}
+
+model Item {
+  id           String     @id @default(uuid(7))
+  mappingId    String
+  quantity     Int        @default(0)
+  position     Int
+
+  player       Player?    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  playerId     String?
+  spaceship    Spaceship? @relation(fields: [spaceshipId], references: [id], onDelete: Cascade)
+  spaceshipId  String?
+
+  properties   ItemProperty[]
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("items")
+}
+
+model Planet {
+  id         String    @id @default(uuid(7))
+  type       String    @default("default")
+  position   Int
+
+  world      World     @relation(fields: [worldId], references: [id], onDelete: Cascade)
+  worldId    String
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("planets")
+}
+
+model Spaceship {
+  id         String    @id @default(uuid(7))
+  type       String
+
+  items      Item[]
+
+  world      World     @relation(fields: [worldId], references: [id], onDelete: Cascade)
+  worldId    String    @unique
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@map("spaceships")
+}
+
+model ItemProperty {
+  id          String     @id @default(uuid(7))
+  name        String
+  value       Int
+  description String
+  rarity      Rarity     @default(COMMON)
+
+  effectType  EffectType @default(BUFF)
+  valueType   ValueType  @default(ABSOLUTE)
+
+  item        Item       @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId      String
+
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@map("item_properties")
+}
+
+enum WorldStatus {
+  ACTIVE
+  INACTIVE
+
+  @@map("world_status_enum")
+}
+
+enum EffectType {
+  BUFF
+  DEBUFF
+
+  @@map("effect_type_enum")
+}
+
+enum ValueType {
+  PERCENTAGE
+  ABSOLUTE
+
+  @@map("value_type_enum")
+}
+
+enum Rarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+  UNIQUE
 }

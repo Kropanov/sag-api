@@ -1,12 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import { IsDefined, IsOptional } from 'class-validator';
 
-export class UpdateUserDTO {
+// FIXME: there are 2 user dto files
+@Exclude()
+export class UserDTO {
     @Expose()
     @IsDefined()
     @ApiProperty({ type: String })
-    email: string;
+    id: string;
 
     @Expose()
     @IsOptional()
@@ -16,7 +18,12 @@ export class UpdateUserDTO {
     @Expose()
     @IsDefined()
     @ApiProperty({ type: String })
-    password: string;
+    email: string;
+
+    @Expose()
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    password?: string;
 
     @Expose()
     @IsDefined()
