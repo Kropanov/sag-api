@@ -2,7 +2,7 @@ import { PrismaService } from '@app/libs/prisma';
 import { Injectable } from '@nestjs/common';
 
 import { CreateItemResponseDTO } from './dto/create-item-response.dto';
-import { UpdateItemDto } from './dto/update-item.dto';
+import { UpdateItemDTO } from './dto/update-item.dto';
 
 @Injectable()
 export class ItemsService {
@@ -12,9 +12,9 @@ export class ItemsService {
         this.prismaService = new PrismaService();
     }
 
-    async create(data: CreateItemResponseDTO) {
+    async create(CreateItemDTO: CreateItemResponseDTO) {
         return this.prismaService.item.create({
-            data,
+            data: CreateItemDTO,
             include: {
                 properties: true,
             },
@@ -22,20 +22,26 @@ export class ItemsService {
     }
 
     async findAll() {
+        // TODO: add base-query filters
         return this.prismaService.item.findMany();
     }
 
-    async findOne(id: number) {
-        return `This action returns a #${id} item`;
+    async findOne(id: string) {
+        return this.prismaService.item.findUnique({ where: { id } });
     }
 
-    async update(id: number, updateItemDto: UpdateItemDto) {
-        console.log(updateItemDto);
-
-        return `This action updates a #${id} item`;
+    async update(id: string, updateItemDTO: UpdateItemDTO) {
+        return this.prismaService.item.update({
+            where: { id },
+            data: updateItemDTO,
+        });
     }
 
-    async remove(id: number) {
-        return `This action removes a #${id} item`;
+    async remove(id: string) {
+        return this.prismaService.item.delete({ where: { id } });
+    }
+
+    async removeAll() {
+        return this.prismaService.item.deleteMany();
     }
 }
