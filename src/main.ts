@@ -1,3 +1,5 @@
+import * as process from 'node:process';
+
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -7,6 +9,12 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
     app.setGlobalPrefix('/api');
+
+    app.enableCors({
+        origin: process.env.CLIENT_URL || 'http://localhost:5173',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
+    });
 
     const config = new DocumentBuilder()
         .setTitle('Spells and Gears')
