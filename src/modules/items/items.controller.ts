@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { ApiBody, ApiProperty } from '@nestjs/swagger';
 
 import { CreateItemResponseDTO } from './dto/create-item-response.dto';
 import { UpdateItemDTO } from './dto/update-item.dto';
@@ -9,8 +10,14 @@ export class ItemsController {
     constructor(private readonly itemsService: ItemsService) {}
 
     @Post()
-    create(@Body() createItemDTO: CreateItemResponseDTO) {
-        return this.itemsService.create(createItemDTO);
+    create(@Body() data: CreateItemResponseDTO) {
+        return this.itemsService.create(data);
+    }
+
+    @Post('bulk')
+    @ApiBody({ type: [CreateItemResponseDTO] })
+    createMany(@Body() data: CreateItemResponseDTO[]) {
+        return this.itemsService.createMany(data);
     }
 
     @Get()
@@ -24,8 +31,8 @@ export class ItemsController {
     }
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateItemDTO: UpdateItemDTO) {
-        return this.itemsService.update(id, updateItemDTO);
+    update(@Param('id') id: string, @Body() data: UpdateItemDTO) {
+        return this.itemsService.update(id, data);
     }
 
     @Delete(':id')
