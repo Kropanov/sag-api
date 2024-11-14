@@ -21,7 +21,18 @@ async function bootstrap() {
     const config = new DocumentBuilder()
         .setTitle('Spells and Gears')
         .setDescription('The Spells and Gears API documentation')
-        .setVersion('0.0.3')
+        .setVersion('0.1.0')
+        .addBearerAuth(
+            {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+                name: 'JWT Authentication',
+                description: 'Enter JWT token',
+                in: 'header',
+            },
+            'jwt',
+        )
         .build();
 
     const document = SwaggerModule.createDocument(app, config);

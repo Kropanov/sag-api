@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiBody, ApiProperty } from '@nestjs/swagger';
+import { JwtAuthGuard } from '@app/guards/jwt-auth.guard';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiBody } from '@nestjs/swagger';
 
 import { CreateItemResponseDTO } from './dto/create-item-response.dto';
 import { UpdateItemDTO } from './dto/update-item.dto';
 import { ItemsService } from './items.service';
 
+@ApiBearerAuth('jwt')
+@UseGuards(JwtAuthGuard)
 @Controller('items')
 export class ItemsController {
     constructor(private readonly itemsService: ItemsService) {}
