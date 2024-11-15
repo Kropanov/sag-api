@@ -8,7 +8,7 @@ import { ItemsService } from './items.service';
 
 @ApiBearerAuth('jwt')
 @UseGuards(JwtAuthGuard)
-@Controller('items')
+@Controller({ path: 'items', version: '1' })
 export class ItemsController {
     constructor(private readonly itemsService: ItemsService) {}
 

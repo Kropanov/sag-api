@@ -2,7 +2,7 @@ import { AuthService } from '@app/modules/auth/auth.service';
 import { LoginRequestDTO } from '@app/modules/auth/dto/login-request.dto';
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 export class AuthController {
     constructor(private authService: AuthService) {}
 
