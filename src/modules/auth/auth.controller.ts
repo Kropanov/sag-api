@@ -1,6 +1,7 @@
 import { AuthService } from '@app/modules/auth/auth.service';
 import { LoginRequestDTO } from '@app/modules/auth/dto/login-request.dto';
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { SignupRequestDTO } from '@app/modules/auth/dto/signup-request.dto';
+import { Body, Controller, Post } from '@nestjs/common';
 
 @Controller({ path: 'auth', version: '1' })
 export class AuthController {
@@ -8,17 +9,15 @@ export class AuthController {
 
     @Post('login')
     async login(@Body() body: LoginRequestDTO) {
-        const { username, password } = body;
-        const user = await this.authService.validateUser(username, password);
-        if (!user) {
-            throw new UnauthorizedException('Invalid credentials');
-        }
+        const user = await this.authService.validateUser(body.email, body.password);
 
         return this.authService.login(user);
     }
 
     @Post('signup')
-    async signup() {
-        // TODO: implement logic...
+    async signup(@Body() body: SignupRequestDTO) {
+        const user = await this.authService.registerUser(body.email, body.password);
+
+        return this.authService.login(user);
     }
 }
