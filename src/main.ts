@@ -22,7 +22,7 @@ async function bootstrap() {
     const config = new DocumentBuilder()
         .setTitle('Spells and Gears')
         .setDescription('The Spells and Gears API documentation')
-        .setVersion('0.1.0')
+        .setVersion('0.1.1')
         .addBearerAuth(
             {
                 type: 'http',
