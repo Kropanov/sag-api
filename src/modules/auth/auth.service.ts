@@ -13,10 +13,10 @@ export class AuthService {
 
     async login(user: any) {
         const payload = { email: user.email, sub: user.id };
-        const accessToken = await this.jwtService.signAsync(payload);
+        const authToken = await this.jwtService.signAsync(payload);
 
         return {
-            accessToken,
+            authToken,
         };
     }
 
