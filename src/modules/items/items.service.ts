@@ -12,13 +12,17 @@ export class ItemsService {
         this.prismaService = new PrismaService();
     }
 
-    async create(CreateItemDTO: CreateItemResponseDTO) {
+    async create(data: CreateItemResponseDTO) {
         return this.prismaService.item.create({
-            data: CreateItemDTO,
+            data,
             include: {
                 properties: true,
             },
         });
+    }
+
+    async createMany(data: CreateItemResponseDTO[]) {
+        return this.prismaService.item.createMany({ data });
     }
 
     async findAll() {
@@ -30,10 +34,10 @@ export class ItemsService {
         return this.prismaService.item.findUnique({ where: { id } });
     }
 
-    async update(id: string, updateItemDTO: UpdateItemDTO) {
+    async update(id: string, data: UpdateItemDTO) {
         return this.prismaService.item.update({
             where: { id },
-            data: updateItemDTO,
+            data,
         });
     }
 
