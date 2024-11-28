@@ -26,8 +26,12 @@ export class UsersService {
         });
     }
 
-    findOneByEmail(email: string) {
-        return this.prismaService.user.findUnique({ where: { email } });
+    findOneByName(name: string) {
+        return this.prismaService.user.findUnique({
+            where: {
+                name: name,
+            },
+        });
     }
 
     update(id: string, data: UpdateUserDTO) {
@@ -40,9 +44,6 @@ export class UsersService {
     remove(id: string) {
         return this.prismaService.user.delete({
             where: { id },
-            select: {
-                email: true,
-            },
         });
     }
 

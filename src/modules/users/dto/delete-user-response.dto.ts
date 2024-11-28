@@ -8,5 +8,5 @@ export class DeleteUserResponseDTO {
     @IsDefined()
     @IsString()
     @ApiProperty({ type: String })
-    email: string;
+    name: string;
 }
