@@ -25,7 +25,7 @@ export class WorldDTO {
     // TODO: add dtos instead of objects
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: String })
+    @ApiProperty({ type: Object })
     players: object;
 
     @Expose()
