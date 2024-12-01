@@ -3,10 +3,19 @@ import { Exclude, Expose } from 'class-transformer';
 import { IsDefined, IsString } from 'class-validator';
 
 @Exclude()
-export class DeleteUserResponseDTO {
+export class SpaceshipDTO {
     @Expose()
-    @IsDefined()
     @IsString()
     @ApiProperty({ type: String })
-    name: string;
+    type: string;
+
+    @Expose()
+    @IsDefined()
+    @ApiProperty({ type: Object })
+    items: object;
+
+    @Expose()
+    @IsString()
+    @ApiProperty({ type: String })
+    worldId: string;
 }

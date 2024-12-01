@@ -11,14 +11,9 @@ export class UserDTO {
     id: string;
 
     @Expose()
-    @IsOptional()
-    @ApiPropertyOptional({ type: String })
-    name?: string;
-
-    @Expose()
     @IsDefined()
     @ApiProperty({ type: String })
-    email: string;
+    name: string;
 
     @Expose()
     @IsOptional()

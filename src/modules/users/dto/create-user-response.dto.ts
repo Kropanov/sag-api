@@ -12,7 +12,7 @@ export class CreateUserResponseDTO {
     @Expose()
     @IsNotEmpty()
     @ApiProperty({ type: String })
-    email: string;
+    name: string;
 
     @Expose()
     @IsNotEmpty()

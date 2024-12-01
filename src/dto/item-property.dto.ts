@@ -1,5 +1,4 @@
-import { EffectTypeEnum, RarityEnum } from '@app/types';
-import { ValueTypeEnum } from '@app/types/value-type.enum';
+import { EffectTypeEnum, RarityEnum, ValueTypeEnum } from '@app/enums';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
 import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';

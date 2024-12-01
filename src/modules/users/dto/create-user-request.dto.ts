@@ -1,18 +1,13 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 @Exclude()
 export class CreateUserRequestDTO {
     @Expose()
-    @IsOptional()
-    @ApiPropertyOptional({ type: String })
-    name?: string;
-
-    @Expose()
     @IsNotEmpty()
     @ApiProperty({ type: String })
-    email: string;
+    name: string;
 
     @Expose()
     @IsNotEmpty()

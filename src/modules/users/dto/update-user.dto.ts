@@ -1,17 +1,12 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsDefined, IsOptional } from 'class-validator';
+import { IsDefined } from 'class-validator';
 
 export class UpdateUserDTO {
     @Expose()
     @IsDefined()
     @ApiProperty({ type: String })
-    email: string;
-
-    @Expose()
-    @IsOptional()
-    @ApiPropertyOptional({ type: String })
-    name?: string;
+    name: string;
 
     @Expose()
     @IsDefined()

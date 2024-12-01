@@ -12,7 +12,7 @@ export class AuthService {
     ) {}
 
     async login(user: any) {
-        const payload = { email: user.email, sub: user.id };
+        const payload = { name: user.name, sub: user.id };
         const authToken = await this.jwtService.signAsync(payload);
 
         return {
@@ -20,8 +20,8 @@ export class AuthService {
         };
     }
 
-    async validateUser(email: string, plainTextPassword: string) {
-        const user = await this.usersService.findOneByEmail(email);
+    async validateUser(name: string, plainTextPassword: string) {
+        const user = await this.usersService.findOneByName(name);
         if (!user) {
             // FIXME: change to avoid hints for hacking purposes
             throw new UnauthorizedException('User not found.');
@@ -35,9 +35,9 @@ export class AuthService {
         return user;
     }
 
-    async registerUser(email: string, plainTextPassword: string) {
+    async registerUser(name: string, plainTextPassword: string) {
         const encryptedPassword = await this.bcryptService.hash(plainTextPassword);
 
-        return this.usersService.create({ email, password: encryptedPassword });
+        return this.usersService.create({ name, password: encryptedPassword });
     }
 }
