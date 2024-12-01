@@ -28,9 +28,7 @@ export class UsersService {
 
     findOneByName(name: string) {
         return this.prismaService.user.findUnique({
-            where: {
-                name: name,
-            },
+            where: { name },
         });
     }
 
