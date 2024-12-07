@@ -1,10 +1,15 @@
-import { PropertiesDTO } from '@app/dto/properties.dto';
+import { PropertiesDTO } from '@app/dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsDefined, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsDefined, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 @Exclude()
 export class ItemDTO {
+    @Expose()
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    id?: string;
+
     @Expose()
     @IsString()
     @IsNotEmpty()
@@ -12,6 +17,7 @@ export class ItemDTO {
     mappingId: string;
 
     @Expose()
+    @IsNumber()
     @IsOptional()
     @ApiPropertyOptional({ type: Number })
     quantity?: number;
@@ -37,4 +43,16 @@ export class ItemDTO {
     @IsDefined()
     @ApiProperty({ type: PropertiesDTO })
     properties: PropertiesDTO;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    createdAt?: Date;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    updatedAt?: Date;
 }

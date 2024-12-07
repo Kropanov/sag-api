@@ -1,4 +1,4 @@
-import { ItemPropertyDTO } from '@app/dto/item-property.dto';
+import { ItemPropertyDTO } from '@app/dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { IsArray } from 'class-validator';

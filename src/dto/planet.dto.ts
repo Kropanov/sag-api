@@ -1,9 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
 @Exclude()
 export class PlanetDTO {
+    @Expose()
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    id?: string;
+
     @Expose()
     @IsString()
     @IsOptional()
@@ -19,4 +24,16 @@ export class PlanetDTO {
     @IsString()
     @ApiProperty({ type: String })
     worldId: string;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    createdAt?: Date;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    updatedAt?: Date;
 }

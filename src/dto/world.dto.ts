@@ -1,10 +1,16 @@
+import { PlanetsDTO, PlayersDTO, SpaceshipDTO } from '@app/dto';
 import { WorldStatusEnum } from '@app/enums';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsDefined, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsDefined, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 
 @Exclude()
 export class WorldDTO {
+    @Expose()
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    id?: string;
+
     @Expose()
     @IsNumber()
     @IsOptional()
@@ -22,19 +28,30 @@ export class WorldDTO {
     @ApiProperty({ type: String })
     userId: string;
 
-    // TODO: add dtos instead of objects
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: Object })
-    players: object;
+    @ApiProperty({ type: PlayersDTO })
+    players: PlayersDTO;
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: Object })
-    planets: object;
+    @ApiProperty({ type: PlanetsDTO })
+    planets: PlanetsDTO;
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: Object })
-    spaceship: object;
+    @ApiProperty({ type: SpaceshipDTO })
+    spaceship: SpaceshipDTO;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    createdAt?: Date;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    updatedAt?: Date;
 }

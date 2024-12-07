@@ -1,10 +1,15 @@
 import { EffectTypeEnum, RarityEnum, ValueTypeEnum } from '@app/enums';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 @Exclude()
 export class ItemPropertyDTO {
+    @Expose()
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    id?: string;
+
     @Expose()
     @IsString()
     @IsNotEmpty()
@@ -46,4 +51,16 @@ export class ItemPropertyDTO {
     @IsOptional()
     @ApiPropertyOptional({ type: String })
     itemId?: string;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    createdAt?: Date;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    updatedAt?: Date;
 }
