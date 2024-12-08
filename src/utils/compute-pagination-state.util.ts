@@ -1,4 +1,4 @@
-import { PaginationDTO } from '@app/dto/pagination.dto';
+import { PaginationDTO } from '@app/dto/shared';
 
 export const computePaginationState = (totalCounter: number, pagination: PaginationDTO) => {
     return {

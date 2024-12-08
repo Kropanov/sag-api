@@ -1,13 +1,14 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ItemsDTO } from '@app/dto';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsDefined, IsString } from 'class-validator';
+import { IsDate, IsDefined, IsOptional, IsString } from 'class-validator';
 
 @Exclude()
 export class PlayerDTO {
     @Expose()
-    @IsString()
-    @ApiProperty({ type: String })
-    userId: string;
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    id?: string;
 
     @Expose()
     @IsString()
@@ -15,7 +16,24 @@ export class PlayerDTO {
     worldId: string;
 
     @Expose()
+    @IsString()
+    @ApiProperty({ type: String })
+    userId: string;
+
+    @Expose()
     @IsDefined()
-    @ApiProperty({ type: Object })
-    items: object;
+    @ApiProperty({ type: ItemsDTO })
+    items: ItemsDTO;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    createdAt?: Date;
+
+    @Expose()
+    @IsDate()
+    @IsOptional()
+    @ApiPropertyOptional({ type: Date })
+    updatedAt?: Date;
 }
