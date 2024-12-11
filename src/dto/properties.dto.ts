@@ -8,6 +8,6 @@ export class PropertiesDTO {
     @Type(() => ItemPropertyDTO)
     @Expose()
     @IsArray()
-    @ApiProperty({ type: ItemPropertyDTO, isArray: true })
+    @ApiProperty({ type: () => [ItemPropertyDTO], isArray: true })
     create: ItemPropertyDTO[];
 }

@@ -41,7 +41,7 @@ export class ItemDTO {
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: PropertiesDTO })
+    @ApiProperty({ type: () => PropertiesDTO })
     properties: PropertiesDTO;
 
     @Expose()

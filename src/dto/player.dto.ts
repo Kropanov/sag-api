@@ -22,7 +22,7 @@ export class PlayerDTO {
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: ItemsDTO })
+    @ApiProperty({ type: () => ItemsDTO })
     items: ItemsDTO;
 
     @Expose()

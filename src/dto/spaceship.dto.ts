@@ -17,7 +17,7 @@ export class SpaceshipDTO {
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: ItemsDTO })
+    @ApiProperty({ type: () => ItemsDTO })
     items: ItemsDTO;
 
     @Expose()
