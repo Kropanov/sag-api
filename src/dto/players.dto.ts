@@ -8,6 +8,6 @@ export class PlayersDTO {
     @Type(() => PlayerDTO)
     @Expose()
     @IsArray()
-    @ApiProperty({ type: PlayerDTO, isArray: true })
+    @ApiProperty({ type: () => [PlayerDTO], isArray: true })
     create: PlayerDTO[];
 }

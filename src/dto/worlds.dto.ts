@@ -8,6 +8,6 @@ export class WorldsDTO {
     @Type(() => WorldDTO)
     @Expose()
     @IsArray()
-    @ApiProperty({ type: WorldDTO, isArray: true })
+    @ApiProperty({ type: () => [WorldDTO], isArray: true })
     create: WorldDTO[];
 }

@@ -22,12 +22,12 @@ export class UserDTO {
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: WorldsDTO })
+    @ApiProperty({ type: () => WorldsDTO })
     worlds: WorldsDTO;
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: PlayersDTO })
+    @ApiProperty({ type: () => PlayersDTO })
     players: PlayersDTO;
 
     @Expose()

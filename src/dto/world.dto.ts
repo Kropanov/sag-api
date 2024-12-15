@@ -30,17 +30,17 @@ export class WorldDTO {
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: PlayersDTO })
+    @ApiProperty({ type: () => PlayersDTO })
     players: PlayersDTO;
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: PlanetsDTO })
+    @ApiProperty({ type: () => PlanetsDTO })
     planets: PlanetsDTO;
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: SpaceshipDTO })
+    @ApiProperty({ type: () => SpaceshipDTO })
     spaceship: SpaceshipDTO;
 
     @Expose()
