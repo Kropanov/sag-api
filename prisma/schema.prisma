@@ -49,6 +49,7 @@ model Player {
   userId     String
 
   items      Item[]
+  // TODO: totalSlots Int       @default(20)
 
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
