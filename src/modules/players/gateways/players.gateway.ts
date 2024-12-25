@@ -1,12 +1,37 @@
-import { MessageBody, SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import {
+    MessageBody,
+    OnGatewayConnection,
+    OnGatewayDisconnect,
+    OnGatewayInit,
+    SubscribeMessage,
+    WebSocketGateway,
+    WebSocketServer,
+} from '@nestjs/websockets';
+import { Server } from 'socket.io';
 
 import { CreatePlayerDto } from '../dto/create-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { PlayersService } from '../services/players.service';
 
-@WebSocketGateway()
-export class PlayersGateway {
+@WebSocketGateway(5000, { cors: { origin: process.env.CLIENT_URL || 'http://localhost:5173' } })
+export class PlayersGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+    @WebSocketServer()
+    server: Server;
+
     constructor(private readonly playersService: PlayersService) {}
+
+    handleConnection(client: any) {
+        console.log(`Client connected: ${client.id}`);
+    }
+
+    handleDisconnect(client: any) {
+        console.log(`Client disconnected: ${client.id}`);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    afterInit(_server: any): any {
+        console.log('WebSocket Server Initialized');
+    }
 
     @SubscribeMessage('createPlayer')
     create(@MessageBody() createPlayerDto: CreatePlayerDto) {
