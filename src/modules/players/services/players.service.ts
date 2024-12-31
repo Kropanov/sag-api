@@ -3,21 +3,71 @@ import { Injectable } from '@nestjs/common';
 import { CreatePlayerDto } from '../dto/create-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
 
+export interface PlayerState {
+    position: { x: number; y: number };
+    health: number;
+    // inventory: Item[];
+}
+
+// interface Item {
+//     id: string;
+//     name: string;
+//     quantity: number;
+//     rarity: string;
+// }
+
+export interface Player {
+    id: string;
+    name: string;
+    state: PlayerState;
+}
+
 @Injectable()
 export class PlayersService {
-    create(createPlayerDto: CreatePlayerDto) {
-        return `This action adds a new player ${createPlayerDto}`;
+    private players = new Map<string, Player>();
+
+    joined(createPlayerDto: CreatePlayerDto) {
+        const player = {
+            id: createPlayerDto.id,
+            name: 'username',
+            state: {
+                position: { x: 0, y: 0 },
+                health: 100,
+            },
+        };
+
+        this.players.set(createPlayerDto.id, player);
+
+        return { player };
     }
 
-    findAll() {
+    getPlayers() {
         return `This action returns all players`;
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} player`;
+    move(data: any) {
+        this.players.set(data.id, {
+            id: data.id,
+            name: data.name,
+            state: {
+                position: { x: data.x, y: data.y },
+                health: data.health,
+            },
+        });
+
+        const player = this.players.get(data.id);
+
+        if (player) {
+            player.state.position.x = data.velocity.x;
+            player.state.position.y = data.velocity.y;
+        }
+
+        console.log(player);
+
+        return `This player's moving`;
     }
 
-    update(id: number, updatePlayerDto: UpdatePlayerDto) {
+    update(id: string, updatePlayerDto: UpdatePlayerDto) {
         return `This action updates a #${id} player ${updatePlayerDto}`;
     }
 

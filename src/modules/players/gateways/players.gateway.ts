@@ -33,19 +33,27 @@ export class PlayersGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         console.log('WebSocket Server Initialized');
     }
 
-    @SubscribeMessage('createPlayer')
+    @SubscribeMessage('joined')
     create(@MessageBody() createPlayerDto: CreatePlayerDto) {
-        return this.playersService.create(createPlayerDto);
+        console.log('id:', createPlayerDto.id);
+
+        // send message to clients
+        // this.server.send({ type: 'create', data: 123 });
+        console.log();
+        const newPlayer = this.playersService.joined(createPlayerDto);
+        this.server.send({ type: 'new_player', data: newPlayer });
     }
 
     @SubscribeMessage('findAllPlayers')
     findAll() {
-        return this.playersService.findAll();
+        const data = this.playersService.getPlayers();
+
+        this.server.send(data);
     }
 
-    @SubscribeMessage('findOnePlayer')
-    findOne(@MessageBody() id: number) {
-        return this.playersService.findOne(id);
+    @SubscribeMessage('move')
+    findOne(@MessageBody() data: any) {
+        return this.playersService.move(data);
     }
 
     @SubscribeMessage('updatePlayer')
