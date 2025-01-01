@@ -46,25 +46,15 @@ export class PlayersService {
     }
 
     move(data: any) {
-        this.players.set(data.id, {
-            id: data.id,
-            name: data.name,
-            state: {
-                position: { x: data.x, y: data.y },
-                health: data.health,
-            },
-        });
-
+        console.log(data.y);
         const player = this.players.get(data.id);
 
         if (player) {
-            player.state.position.x = data.velocity.x;
-            player.state.position.y = data.velocity.y;
+            player.state.position.x = data.x;
+            player.state.position.y = data.y;
         }
 
-        console.log(player);
-
-        return `This player's moving`;
+        return player;
     }
 
     update(id: string, updatePlayerDto: UpdatePlayerDto) {

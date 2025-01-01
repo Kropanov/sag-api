@@ -53,7 +53,9 @@ export class PlayersGateway implements OnGatewayInit, OnGatewayConnection, OnGat
 
     @SubscribeMessage('move')
     findOne(@MessageBody() data: any) {
-        return this.playersService.move(data);
+        const player = this.playersService.move(data);
+
+        this.server.send({ type: 'move', data: player });
     }
 
     @SubscribeMessage('updatePlayer')
