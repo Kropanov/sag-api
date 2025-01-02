@@ -11,7 +11,6 @@ import {
 import { Server, Socket } from 'socket.io';
 
 import { CreatePlayerDto } from '../dto/create-player.dto';
-import { UpdatePlayerDto } from '../dto/update-player.dto';
 import { PlayersService } from '../services/players.service';
 
 @WebSocketGateway(5000, { cors: { origin: process.env.CLIENT_URL || 'http://localhost:5173' } })
@@ -27,6 +26,8 @@ export class PlayersGateway implements OnGatewayInit, OnGatewayConnection, OnGat
 
     handleDisconnect(client: any) {
         console.log(`Client disconnected: ${client.id}`);
+        this.playersService.remove(client.id);
+        this.server.send({ type: 'player_leave', data: { clientId: client.id } });
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -60,13 +61,8 @@ export class PlayersGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         this.server.send({ type: 'move', data: player });
     }
 
-    @SubscribeMessage('updatePlayer')
-    update(@MessageBody() updatePlayerDto: UpdatePlayerDto) {
-        return this.playersService.update(updatePlayerDto.id, updatePlayerDto);
-    }
-
     @SubscribeMessage('removePlayer')
-    remove(@MessageBody() id: number) {
-        return this.playersService.remove(id);
+    remove(@MessageBody() data: any, @ConnectedSocket() client: Socket) {
+        return this.playersService.remove(client.id);
     }
 }

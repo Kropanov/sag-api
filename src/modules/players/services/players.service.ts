@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { CreatePlayerDto } from '../dto/create-player.dto';
-import { UpdatePlayerDto } from '../dto/update-player.dto';
 
 export interface PlayerState {
     position: { x: number; y: number };
@@ -65,11 +64,7 @@ export class PlayersService {
         return { clientId, player };
     }
 
-    update(id: string, updatePlayerDto: UpdatePlayerDto) {
-        return `This action updates a #${id} player ${updatePlayerDto}`;
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} player`;
+    remove(clientId: string) {
+        this.players.delete(clientId);
     }
 }
