@@ -26,7 +26,7 @@ export interface Player {
 export class PlayersService {
     private players = new Map<string, Player>();
 
-    joined(createPlayerDto: CreatePlayerDto) {
+    joined(createPlayerDto: CreatePlayerDto, clientId: string) {
         const player = {
             id: createPlayerDto.id,
             name: 'username',
@@ -36,25 +36,33 @@ export class PlayersService {
             },
         };
 
-        this.players.set(createPlayerDto.id, player);
+        this.players.set(clientId, player);
 
-        return { player };
+        return { clientId, player };
     }
 
-    getPlayers() {
-        return `This action returns all players`;
+    getAllPlayers() {
+        const playersArray = Array.from(this.players.entries()).map(([clientId, playerData]) => ({
+            clientId,
+            ...playerData,
+        }));
+        console.log();
+
+        console.log('All players:', playersArray);
+
+        return playersArray;
     }
 
-    move(data: any) {
-        console.log(data.y);
-        const player = this.players.get(data.id);
+    move(data: any, clientId: string) {
+        console.log(clientId);
+        const player = this.players.get(clientId);
 
         if (player) {
             player.state.position.x = data.x;
             player.state.position.y = data.y;
         }
 
-        return player;
+        return { clientId, player };
     }
 
     update(id: string, updatePlayerDto: UpdatePlayerDto) {

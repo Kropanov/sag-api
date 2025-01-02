@@ -1,4 +1,5 @@
 import {
+    ConnectedSocket,
     MessageBody,
     OnGatewayConnection,
     OnGatewayDisconnect,
@@ -7,7 +8,7 @@ import {
     WebSocketGateway,
     WebSocketServer,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
 import { CreatePlayerDto } from '../dto/create-player.dto';
 import { UpdatePlayerDto } from '../dto/update-player.dto';
@@ -34,26 +35,27 @@ export class PlayersGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     }
 
     @SubscribeMessage('joined')
-    create(@MessageBody() createPlayerDto: CreatePlayerDto) {
+    create(@MessageBody() createPlayerDto: CreatePlayerDto, @ConnectedSocket() client: Socket) {
         console.log('id:', createPlayerDto.id);
+        console.log('clientid:', client.id);
 
         // send message to clients
         // this.server.send({ type: 'create', data: 123 });
         console.log();
-        const newPlayer = this.playersService.joined(createPlayerDto);
+        const newPlayer = this.playersService.joined(createPlayerDto, client.id);
         this.server.send({ type: 'new_player', data: newPlayer });
     }
 
     @SubscribeMessage('findAllPlayers')
     findAll() {
-        const data = this.playersService.getPlayers();
+        const data = this.playersService.getAllPlayers();
 
-        this.server.send(data);
+        return [...data];
     }
 
     @SubscribeMessage('move')
-    findOne(@MessageBody() data: any) {
-        const player = this.playersService.move(data);
+    findOne(@MessageBody() data: any, @ConnectedSocket() client: Socket) {
+        const player = this.playersService.move(data, client.id);
 
         this.server.send({ type: 'move', data: player });
     }
