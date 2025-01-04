@@ -61,8 +61,11 @@ export class PlayersGateway implements OnGatewayInit, OnGatewayConnection, OnGat
         this.server.send({ type: 'move', data: player });
     }
 
-    @SubscribeMessage('removePlayer')
+    @SubscribeMessage('playerAction')
     remove(@MessageBody() data: any, @ConnectedSocket() client: Socket) {
-        return this.playersService.remove(client.id);
+        this.server.send({
+            type: 'player_move',
+            data: { action: data.action, keyCode: data.keyCode, clientId: client.id },
+        });
     }
 }
