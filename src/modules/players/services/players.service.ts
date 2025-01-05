@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreatePlayerDto } from '../dto/create-player.dto';
+import { PlayerJoinDTO } from '../dto/create-player.dto';
 
 export interface PlayerState {
     position: { x: number; y: number };
@@ -25,7 +25,8 @@ export interface Player {
 export class PlayersService {
     private players = new Map<string, Player>();
 
-    joined(createPlayerDto: CreatePlayerDto, clientId: string) {
+    // TODO: dto and main logic of the method
+    add(createPlayerDto: PlayerJoinDTO, clientId: string) {
         const player = {
             id: createPlayerDto.id,
             name: 'username',
@@ -40,28 +41,11 @@ export class PlayersService {
         return { clientId, player };
     }
 
-    getAllPlayers() {
-        const playersArray = Array.from(this.players.entries()).map(([clientId, playerData]) => ({
+    getAll() {
+        return Array.from(this.players.entries()).map(([clientId, playerData]) => ({
             clientId,
             ...playerData,
         }));
-        console.log();
-
-        console.log('All players:', playersArray);
-
-        return playersArray;
-    }
-
-    move(data: any, clientId: string) {
-        console.log(clientId);
-        const player = this.players.get(clientId);
-
-        if (player) {
-            player.state.position.x = data.x;
-            player.state.position.y = data.y;
-        }
-
-        return { clientId, player };
     }
 
     remove(clientId: string) {

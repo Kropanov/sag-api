@@ -9,7 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-import { CreatePlayerDto } from '../dto/create-player.dto';
+import { PlayerJoinDTO } from '../dto/create-player.dto';
 import { PlayersService } from '../services/players.service';
 
 @WebSocketGateway(5000, { cors: { origin: process.env.CLIENT_URL || 'http://localhost:5173' } })
@@ -25,14 +25,14 @@ export class PlayersGateway implements OnGatewayDisconnect {
     }
 
     @SubscribeMessage(PlayerEvents.JOIN)
-    create(@MessageBody() createPlayerDto: CreatePlayerDto, @ConnectedSocket() client: Socket) {
-        const newPlayer = this.playersService.joined(createPlayerDto, client.id);
-        this.server.send({ type: PlayerResponseEvents.JOINED, data: newPlayer });
+    handlePlayerJoin(@MessageBody() body: PlayerJoinDTO, @ConnectedSocket() client: Socket) {
+        const player = this.playersService.add(body, client.id);
+        this.server.send({ type: PlayerResponseEvents.JOINED, data: player });
     }
 
     @SubscribeMessage(PlayerEvents.GET_ALL)
     getAllPlayers() {
-        return this.playersService.getAllPlayers();
+        return this.playersService.getAll();
     }
 
     @SubscribeMessage(PlayerEvents.ACTION)
