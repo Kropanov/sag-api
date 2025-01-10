@@ -15,7 +15,7 @@ export class PlayersService {
     getAll() {
         return Array.from(this.players.entries()).map(([clientId, playerData]) => ({
             clientId,
-            ...playerData,
+            player: { ...playerData },
         }));
     }
 
