@@ -9,6 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
+import { PlayerActionRequestDTO } from '../dto/player-action-request.dto';
 import { PlayerJoinDTO } from '../dto/player-join.dto';
 import { PlayersService } from '../services/players.service';
 
@@ -19,7 +20,7 @@ export class PlayersGateway implements OnGatewayDisconnect {
 
     constructor(private readonly playersService: PlayersService) {}
 
-    handleDisconnect(client: any) {
+    handleDisconnect(client: Socket) {
         this.playersService.remove(client.id);
         this.server.send({ type: PlayerResponseEvents.LEFT, data: { clientId: client.id } });
     }
@@ -36,9 +37,9 @@ export class PlayersGateway implements OnGatewayDisconnect {
     }
 
     @SubscribeMessage(PlayerEvents.ACTION)
-    broadcastPlayerAction(@MessageBody() body: any, @ConnectedSocket() client: Socket) {
-        // TODO: Save here current player position
-        // this.playersService.setPlayerPosition
+    broadcastPlayerAction(@MessageBody() body: PlayerActionRequestDTO, @ConnectedSocket() client: Socket) {
+        // Save current player position
+        this.playersService.update(body, client.id);
 
         this.server.send({
             type: PlayerResponseEvents.ACTION_PERFORMED,

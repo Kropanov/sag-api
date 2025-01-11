@@ -1,3 +1,4 @@
+import { PlayerActionRequestDTO } from '@app/modules/players/dto/player-action-request.dto';
 import { Injectable } from '@nestjs/common';
 
 import { PlayerJoinDTO } from '../dto/player-join.dto';
@@ -21,5 +22,23 @@ export class PlayersService {
 
     remove(clientId: string) {
         return this.players.delete(clientId);
+    }
+
+    update(body: PlayerActionRequestDTO, clientId: string) {
+        const player = this.players.get(clientId);
+
+        if (player) {
+            this.players.set(clientId, {
+                userId: player.userId,
+                username: player.username,
+                state: {
+                    health: player.state.health,
+                    position: {
+                        x: body.position.x,
+                        y: body.position.y,
+                    },
+                },
+            });
+        }
     }
 }
