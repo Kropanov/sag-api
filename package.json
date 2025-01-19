@@ -1,6 +1,6 @@
 {
   "name": "sag-api",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "",
   "author": "",
   "private": true,
@@ -28,7 +28,9 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.4.7",
+    "@nestjs/platform-socket.io": "^10.4.15",
     "@nestjs/swagger": "^8.0.5",
+    "@nestjs/websockets": "^10.4.15",
     "@prisma/client": "^5.22.0",
     "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
