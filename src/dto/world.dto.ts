@@ -1,8 +1,9 @@
-import { PlanetsDTO, PlayersDTO, SpaceshipDTO } from '@app/dto';
+import { PlanetsDTO, PlayersDTO } from '@app/dto';
+import { SpaceshipsDTO } from '@app/dto/spaceships.dto';
 import { WorldStatusEnum } from '@app/enums';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsDate, IsDefined, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDefined, IsEnum, IsNumber, IsOptional } from 'class-validator';
 
 @Exclude()
 export class WorldDTO {
@@ -24,8 +25,8 @@ export class WorldDTO {
     status?: WorldStatusEnum;
 
     @Expose()
-    @IsString()
-    @ApiProperty({ type: String })
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
     userId: string;
 
     @Expose()
@@ -40,18 +41,16 @@ export class WorldDTO {
 
     @Expose()
     @IsDefined()
-    @ApiProperty({ type: () => SpaceshipDTO })
-    spaceship: SpaceshipDTO;
+    @ApiProperty({ type: () => SpaceshipsDTO })
+    spaceship: SpaceshipsDTO;
 
     @Expose()
-    @IsDate()
     @IsOptional()
     @ApiPropertyOptional({ type: Date })
-    createdAt?: Date;
+    createdAt: Date;
 
     @Expose()
-    @IsDate()
     @IsOptional()
     @ApiPropertyOptional({ type: Date })
-    updatedAt?: Date;
+    updatedAt: Date;
 }

@@ -92,7 +92,7 @@ model Planet {
 
 model Spaceship {
   id         String    @id @default(uuid(7))
-  type       String
+  type       String    @default("default")
 
   items      Item[]
 

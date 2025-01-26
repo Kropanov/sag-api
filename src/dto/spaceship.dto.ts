@@ -1,7 +1,7 @@
 import { ItemsDTO } from '@app/dto';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Exclude, Expose } from 'class-transformer';
-import { IsDate, IsDefined, IsOptional, IsString } from 'class-validator';
+import { IsDefined, IsOptional, IsString } from 'class-validator';
 
 @Exclude()
 export class SpaceshipDTO {
@@ -12,8 +12,9 @@ export class SpaceshipDTO {
 
     @Expose()
     @IsString()
-    @ApiProperty({ type: String })
-    type: string;
+    @IsOptional()
+    @ApiPropertyOptional({ type: String })
+    type?: string;
 
     @Expose()
     @IsDefined()
@@ -26,14 +27,12 @@ export class SpaceshipDTO {
     worldId: string;
 
     @Expose()
-    @IsDate()
     @IsOptional()
     @ApiPropertyOptional({ type: Date })
-    createdAt?: Date;
+    createdAt: Date;
 
     @Expose()
-    @IsDate()
     @IsOptional()
     @ApiPropertyOptional({ type: Date })
-    updatedAt?: Date;
+    updatedAt: Date;
 }
