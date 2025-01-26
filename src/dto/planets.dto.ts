@@ -8,6 +8,6 @@ export class PlanetsDTO {
     @Type(() => PlanetDTO)
     @Expose()
     @IsArray()
-    @ApiProperty({ type: () => [PlanetDTO], isArray: true })
-    create: PlanetDTO[];
+    @ApiProperty({ type: () => PlanetDTO, isArray: true })
+    create: PlanetDTO;
 }
