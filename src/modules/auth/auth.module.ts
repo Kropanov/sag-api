@@ -2,7 +2,7 @@ import * as process from 'node:process';
 
 import { BcryptModule } from '@app/libs/bcrypt/bcrypt.module';
 import { UsersModule } from '@app/modules/users';
-import { JwtStrategy } from '@app/strategies/jwt.strategy';
+import { JwtStrategy } from '@app/strategies';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';

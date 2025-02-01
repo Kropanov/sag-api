@@ -1,6 +1,6 @@
-import { BcryptModule } from '@app/libs/bcrypt/bcrypt.module';
+import { BcryptModule } from '@app/libs/bcrypt';
 import { PrismaModule } from '@app/libs/prisma';
-import { AuthModule } from '@app/modules/auth/auth.module';
+import { AuthModule } from '@app/modules/auth';
 import { ItemsModule } from '@app/modules/items/items.module';
 import { PlayersModule } from '@app/modules/players/players.module';
 import { UsersModule } from '@app/modules/users';

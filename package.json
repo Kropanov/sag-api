@@ -95,6 +95,16 @@
       "<rootDir>/"
     ],
     "moduleNameMapper": {
+      "^@app/modules/players/dto(.*)$": "<rootDir>/modules/players/dto$1",
+      "^@app/modules/auth/dto(.*)$": "<rootDir>/modules/auth/dto$1",
+      "^@app/modules/users(.*)$": "<rootDir>/modules/users$1",
+      "^@app/modules/auth(.*)$": "<rootDir>/modules/auth$1",
+      "^@app/libs/prisma(.*)$": "<rootDir>/libs/prisma$1",
+      "^@app/libs/bcrypt(.*)$": "<rootDir>/libs/bcrypt$1",
+      "^@app/strategies(.*)$": "<rootDir>/strategies$1",
+      "^@app/guards(.*)$": "<rootDir>/guards$1",
+      "^@app/enums(.*)$": "<rootDir>/enums$1",
+      "^@app/dto(.*)$": "<rootDir>/dto$1",
       "^@app(|/.*)$": "<rootDir>/src/$1"
     }
   }
