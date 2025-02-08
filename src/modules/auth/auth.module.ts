@@ -1,6 +1,6 @@
 import * as process from 'node:process';
 
-import { BcryptModule } from '@app/libs/bcrypt/bcrypt.module';
+import { BcryptModule } from '@app/libs/bcrypt';
 import { UsersModule } from '@app/modules/users';
 import { JwtStrategy } from '@app/strategies';
 import { Module } from '@nestjs/common';
