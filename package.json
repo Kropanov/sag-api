@@ -1,8 +1,8 @@
 {
   "name": "sag-api",
   "version": "0.2.0",
-  "description": "",
-  "author": "",
+  "description": "API for the sag online cosmic 2D game",
+  "author": "kropanov@gmail.com",
   "private": true,
   "license": "LGPL-3.0-only",
   "scripts": {
