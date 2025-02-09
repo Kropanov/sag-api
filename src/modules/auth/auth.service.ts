@@ -1,5 +1,5 @@
-import { BcryptService } from '@app/libs/bcrypt/bcrypt.service';
-import { UsersService } from '@app/modules/users/users.service';
+import { BcryptService } from '@app/libs/bcrypt';
+import { UsersService } from '@app/modules/users';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 

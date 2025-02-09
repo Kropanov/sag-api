@@ -1,4 +1,5 @@
 import { PlayerEvents, PlayerResponseEvents } from '@app/enums';
+import { PlayerActionRequestDTO, PlayerJoinDTO } from '@app/modules/players/dto';
 import {
     ConnectedSocket,
     MessageBody,
@@ -9,8 +10,6 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-import { PlayerActionRequestDTO } from '../dto/player-action-request.dto';
-import { PlayerJoinDTO } from '../dto/player-join.dto';
 import { PlayersService } from '../services/players.service';
 
 @WebSocketGateway(5000, { cors: { origin: process.env.CLIENT_URL || 'http://localhost:5173' } })

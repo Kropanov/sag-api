@@ -1,7 +1,8 @@
-import { PlayerPositionDTO } from '@app/modules/players/dto/player-position.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { IsDefined, IsNumber } from 'class-validator';
+
+import { PlayerPositionDTO } from './player-position.dto';
 
 @Exclude()
 export class PlayerStateDTO {

@@ -1,7 +1,8 @@
-import { PlayerStateDTO } from '@app/modules/players/dto/player-state.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Type } from 'class-transformer';
 import { IsDefined, IsString } from 'class-validator';
+
+import { PlayerStateDTO } from './player-state.dto';
 
 @Exclude()
 export class PlayerJoinDTO {

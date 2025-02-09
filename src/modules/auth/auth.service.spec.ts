@@ -1,19 +1,46 @@
+import { BcryptService } from '@app/libs/bcrypt';
+import { UsersService } from '@app/modules/users';
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
-    let service: AuthService;
+    let authService: AuthService;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [AuthService],
+            imports: [
+                JwtModule.register({
+                    secret: 'test-secret',
+                    signOptions: { expiresIn: '1h' },
+                }),
+            ],
+            providers: [
+                AuthService,
+                {
+                    provide: UsersService,
+                    useValue: {
+                        findOneByName: jest.fn(),
+                        create: jest.fn(),
+                    },
+                },
+                {
+                    provide: BcryptService,
+                    useValue: {
+                        compare: jest.fn(),
+                        hash: jest.fn(),
+                    },
+                },
+            ],
         }).compile();
 
-        service = module.get<AuthService>(AuthService);
+        authService = module.get<AuthService>(AuthService);
     });
 
     it('should be defined', () => {
-        expect(service).toBeDefined();
+        expect(authService).toBeDefined();
     });
+
+    // Добавьте остальные тесты
 });
