@@ -1,6 +1,6 @@
 {
   "name": "sag-api",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "API for the sag online cosmic 2D game",
   "author": "kropanov@gmail.com",
   "private": true,
